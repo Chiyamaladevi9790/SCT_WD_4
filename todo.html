@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do Web App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .completed {
+            text-decoration: line-through;
+            color: grey;
+        }
+        .motivation {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .celebration {
+            display: none;
+            font-size: 24px;
+            color: green;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>To-Do List</h2>
+        <input type="text" id="taskInput" placeholder="Enter a task">
+        <input type="datetime-local" id="taskDateTime">
+        <button onclick="addTask()">Add Task</button>
+        <ul id="taskList"></ul>
+        <div class="motivation" id="motivationText">Stay focused and achieve greatness! 🚀</div>
+        <div class="celebration" id="celebrationText">🎉 Great Job! Keep Going! 🎉</div>
+    </div>
+    
+    <script>
+        function addTask() {
+            let taskText = document.getElementById("taskInput").value;
+            let taskDateTime = document.getElementById("taskDateTime").value;
+            if (taskText === "") return;
+            
+            let li = document.createElement("li");
+            li.innerHTML = `${taskText} <br> <small>${taskDateTime}</small> 
+                <button onclick="markCompleted(this)">✔</button>
+                <button onclick="removeTask(this)">❌</button>`;
+            document.getElementById("taskList").appendChild(li);
+            
+            document.getElementById("taskInput").value = "";
+        }
+
+        function markCompleted(button) {
+            button.parentElement.classList.toggle("completed");
+            if (button.parentElement.classList.contains("completed")) {
+                showCelebration();
+            }
+        }
+
+        function removeTask(button) {
+            button.parentElement.remove();
+        }
+
+        function showCelebration() {
+            const celebrationText = document.getElementById("celebrationText");
+            celebrationText.style.display = "block";
+            setTimeout(() => {
+                celebrationText.style.display = "none";
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
